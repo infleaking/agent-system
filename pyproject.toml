@@ -1,0 +1,17 @@
+[project]
+name = "aiagent"
+version = "0.1.0"
+description = "Standalone AI agent harness with structured tools and buffer-based editing."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "anthropic",
+  "python-dotenv",
+]
+
+[project.scripts]
+aiagent = "aiagent.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
