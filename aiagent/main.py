@@ -10,6 +10,7 @@ import ast
 import json
 
 from .agent import CustomAIAgent
+from .ui import launch_console
 
 
 def parse_args() -> argparse.Namespace:
@@ -42,6 +43,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Print agent/tool status and exit",
     )
+    parser.add_argument(
+        "--ui",
+        action="store_true",
+        help="Start the standalone user console for inspection and intervention",
+    )
     return parser.parse_args()
 
 
@@ -58,6 +64,11 @@ def parse_tool_arguments(raw: str) -> dict:
 
 def main() -> None:
     args = parse_args()
+
+    if args.ui:
+        launch_console()
+        return
+
     agent = CustomAIAgent(model_name=args.model)
 
     if args.status:
@@ -71,7 +82,13 @@ def main() -> None:
         return
 
     if args.interactive:
-        agent.interactive_mode()
+        print(json.dumps({
+            "ok": True,
+            "message": "Root agent started in mailbox polling mode. Use --ui to send prompts and receive replies.",
+            "agent_id": agent.agent_id,
+            "session_id": agent.session_id,
+        }, ensure_ascii=False, indent=2))
+        agent.serve_forever()
         return
 
     if args.prompt:

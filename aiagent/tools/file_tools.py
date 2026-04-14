@@ -374,7 +374,7 @@ class FileTools:
                 if op_name == "replace_range":
                     start = int(op["start_line"])
                     end = int(op["end_line"])
-                    if start < 1 or end < start:
+                    if start < 1 or end < start or end > len(lines):
                         raise ToolError("invalid replace_range bounds")
                     normalized.append({"op": op_name, "start": start, "end": end, "content": op.get("content", "")})
                 elif op_name == "insert_at":
@@ -385,7 +385,7 @@ class FileTools:
                 elif op_name == "delete_range":
                     start = int(op["start_line"])
                     end = int(op["end_line"])
-                    if start < 1 or end < start:
+                    if start < 1 or end < start or end > len(lines):
                         raise ToolError("invalid delete_range bounds")
                     normalized.append({"op": op_name, "start": start, "end": end})
                 else:

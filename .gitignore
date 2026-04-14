@@ -5,3 +5,10 @@ __pycache__/
 .env
 .tasks/
 .transcripts/
+.aiagent-runtime/
+.aiagent-runtime.json
+.aiagent-registry/
+.aiagent-mailbox/
+.aiagent-sessions/
+playground/
+logs/

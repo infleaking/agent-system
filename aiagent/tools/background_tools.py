@@ -96,3 +96,16 @@ class BackgroundManager:
             notifications = list(self._notification_queue)
             self._notification_queue.clear()
         return notifications
+
+    def snapshot(self) -> Dict[str, Any]:
+        return {
+            "count": len(self.tasks),
+            "tasks": {
+                task_id: {
+                    "status": task.get("status"),
+                    "command": task.get("command"),
+                    "result_preview": (task.get("result") or "")[:200],
+                }
+                for task_id, task in self.tasks.items()
+            },
+        }
